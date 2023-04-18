@@ -3,11 +3,12 @@ import { useState } from "react";
 
 const Home = () => {
 	const [selectedColor, setSelectedColor] = useState("red");
+	const [intervalId, setIntervalId] = useState(null);
 	const [trafficLightColors, setTrafficLightColors] = useState({
-    red: "",
-    orange: "",
-    green: "",
-  });
+		red: "",
+		orange: "",
+		green: "",
+	});
 
 	useEffect(() => {
 		setTrafficLightColors({
@@ -18,18 +19,25 @@ const Home = () => {
 	}, [])
 
 	const handleTrafficLightClick = (color) => {
-		setTrafficLightColors({
-      red: color === "red" ? "selected" : "",
-      orange: color === "orange" ? "selected" : "",
-      green: color === "green" ? "selected" : "",
-			// purple: color === "purple" ? "selected" : "",
-    })
-		
-		setSelectedColor(color)
-  };
+		if (trafficLightColors.hasOwnProperty("purple")) {
+		  setTrafficLightColors({
+			red: color === "red" ? "selected" : "",
+			orange: color === "orange" ? "selected" : "",
+			green: color === "green" ? "selected" : "",
+			purple: color === "purple" ? "selected" : "",
+		  });
+		} else {
+		  setTrafficLightColors({
+			red: color === "red" ? "selected" : "",
+			orange: color === "orange" ? "selected" : "",
+			green: color === "green" ? "selected" : "",
+		  });
+		}
+		setSelectedColor(color);
+	  };
 
 	const cycleColors = () => {
-    switch (selectedColor) {
+		switch (selectedColor) {
 			case "red":
 				handleTrafficLightClick("orange")
 				break;
@@ -44,7 +52,7 @@ const Home = () => {
 				handleTrafficLightClick("red")
 				break;
 		}
-  };
+	};
 
 	const addPurpleColor = () => {
     setTrafficLightColors({
